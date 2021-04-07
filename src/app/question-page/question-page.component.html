@@ -1,0 +1,121 @@
+<div class="row ">
+    <div class="col-md-7 bk">
+        <div class="quiz-box custom-box" *ngIf="show">
+            <div class="question-number">प्रश्न क्रमांक : {{question_count+1}} / {{questions.length}} <span
+                    style="float: right;">{{formatted_min}}:{{formatted_sec}}</span></div>
+            <div class="question-text">{{questions[question_count].question}}</div>
+            <div class="option-container">
+
+                <div id="0" class="option " *ngFor="let item of questions[question_count].options; let i = index"
+                    [style.animation-delay.s]="i" (click)="toggleClass(i)">{{item}}</div>
+            </div>
+            <div class="next-question-btn">
+                <button [disabled]="btnDissabled" class="btn" type="button" (click)="next()">{{buttonTitle}}</button>
+            </div>
+            <div class="answers-indicator">
+                <div *ngFor="let item of questions; let i = index"></div>
+            </div>
+        </div>
+        <div class="result-box custom-box" *ngIf="!show">
+            <h1>निकाल</h1>
+            <table>
+                <tr>
+                    <td class="bg-dark text-white">एकूण प्रश्न</td>
+                    <td class="total-questions">{{questions.length}}</td>
+                </tr>
+
+                <tr>
+                    <td class="bg-dark text-white">बरोबर आलेली उत्तरे</td>
+                    <td class="total-correct">{{correctAnswer}}</td>
+                </tr>
+                <tr>
+                    <td class="bg-dark text-white">चूक असलेली उत्तरे</td>
+                    <td class="total-wrong">{{questions.length - correctAnswer}}</td>
+                </tr>
+                <tr>
+                    <td class="bg-dark text-white">शेकडा निकाल</td>
+                    <td class="percentage">{{100 * correctAnswer /questions.length | number : '1.2-2'}}%</td>
+                </tr>
+                <tr>
+                    <td class="bg-dark text-white">तुमचे पूर्ण नाव लिहा</td>
+                    <td class="total-score"><input type="text" class="form-control" required placeholder="पूर्ण नाव">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-dark text-white">तुमचा मोबाईल क्रमांक लिहा</td>
+                    <td class="total-score"> <input type="text" class="form-control" required
+                            placeholder="मोबाईल क्रमांक"></td>
+                </tr>
+                <tr>
+                    <td class="bg-dark text-white">जिल्हा निवडा</td>
+                    <td class="total-score">
+                        <select class="form-control form-select" required>
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg-dark text-white">तालुका निवडा</td>
+                    <td class="total-score">
+                        <select class="form-control form-select" required>
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <button type="button" [disabled]="true" class="btn">सबमिट करा</button>
+
+        </div>
+    </div>
+    <div class="col-md-5 bk">
+        <div class="quiz-box custom-box">
+            <table datatable class="table table-responsive table-hover ">
+                <thead>
+                    <tr class="bg-dark text-white">
+                        <th scope="col">#</th>
+                        <th scope="col">पूर्ण नाव </th>
+                        <th scope="col">जिल्हा </th>
+                        <th scope="col">तालुका </th>
+                        <th scope="col">गुण </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Santosh Ashokrao Sontakke</td>
+                        <td>Nanded</td>
+                        <td>Degloor</td>
+                        <td>100%</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Santosh Ashokrao Sontakke</td>
+                        <td>Nanded</td>
+                        <td>Degloor</td>
+                        <td>100%</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Santosh Ashokrao Sontakke</td>
+                        <td>Nanded</td>
+                        <td>Degloor</td>
+                        <td>100%</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Santosh Ashokrao Sontakke</td>
+                        <td>Nanded</td>
+                        <td>Degloor</td>
+                        <td>100%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

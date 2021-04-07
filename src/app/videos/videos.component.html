@@ -1,0 +1,67 @@
+<div class="row ss">
+    <div class="col-md-8 bk">
+        <div class="quiz-box custom-box">
+            <h2 class="text-center bg-primarys text-white mt-2"
+                style="background: linear-gradient(to right, rgba(255,93,177,1) 0%, rgba(239,1,124,1) 100%);">व्हिडिओ
+            </h2>
+            <hr>
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">वर्ग निवडा </label>
+                        <select name="selectClass" class="custom-select" (change)="onChangeClass($event)">
+                            <option value="100">खालील पैकी एक</option>
+                            <option value=" {{item.allclasses_id}}" *ngFor="let item of datas">
+                                {{item.allclasses_className}} </option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">विषय निवडा </label>
+                        <select name="sub" class="custom-select" (change)="onChangeSub($event)">
+                            <option value="100">खालील पैकी एक</option>
+                            <option value="{{item.allSubject_id}}" *ngFor="let item of allSubject">
+                                {{item.allSubject_subjectName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">पाठाचे नाव निवडा </label>
+                        <select name="sub" id="state" class="custom-select" (change)="onChangeChapter($event)">
+                            <option value="">खालील पैकी एक</option>
+                            <option value="{{item.allChapters_id}}" *ngFor="let item of allChapters">
+                                {{item.allChapters_name}}</option>
+                        </select>
+                    </div>
+
+
+
+                </div>
+            </form>
+
+            <hr>
+            <div *ngIf="showData && !firstView ">
+                <ul class="list-unstyled">
+                    <li class="media my-4" *ngFor="let item of videoList">
+                        <img src="https://img.youtube.com/vi/{{item.youtube_link}}/3.jpg" class="mr-3" alt="...">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">{{item.youtube_title}} </h5>
+                            <button class="btn btn-outline-danger float-right"
+                                (click)="goToUrl(item.youtube_link)">View</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="!showData" class="text-danger text-center">
+                <h1>माहिती उपलब्ध नाही</h1>
+            </div>
+            <div *ngIf="firstView" class="text-danger text-center">
+                <h1>कृपया वर्ग , विषय व पाठाचे नाव निवडा</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 bk">
+        <div class="quiz-box custom-box">
+
+        </div>
+    </div>
+</div>

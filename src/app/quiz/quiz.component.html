@@ -1,0 +1,62 @@
+<div class="row ss">
+    <div class="col-md-8 bk">
+        <div class="quiz-box custom-box">
+
+
+            <h2 class="text-center bg-primarys text-white mt-2"
+                style="background: linear-gradient(to right, rgba(255,93,177,1) 0%, rgba(239,1,124,1) 100%);">बहुपर्यायी
+                प्रश्न </h2>
+            <hr>
+            <form method="post">
+                <div class="form-row align-items-center">
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">वर्ग निवडा </label>
+                        <select name="selectClass" class="custom-select" (change)="onChangeClass($event)">
+                            <option value="100">खालील पैकी एक</option>
+                            <option value=" {{item.allclasses_id}}" *ngFor="let item of datas">
+                                {{item.allclasses_className}} </option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">विषय निवडा </label>
+                        <select name="sub" class="custom-select" (change)="onChangeSub($event)">
+                            <option value="100">खालील पैकी एक</option>
+                            <option value="{{item.allSubject_id}}" *ngFor="let item of allSubject">
+                                {{item.allSubject_subjectName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">पाठाचे नाव निवडा </label>
+                        <select name="sub" id="state" class="custom-select" (change)="onChangeChapter($event)">
+                            <option value="">खालील पैकी एक</option>
+                            <option value="{{item.allChapters_id}}" *ngFor="let item of allChapters">
+                                {{item.allChapters_name}}</option>
+                        </select>
+                    </div>
+
+
+
+                </div>
+            </form>
+
+            <hr>
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    प्रश्न पत्रिका क्रमांक १
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">गृहपाठ क्रमांक १</h5>
+                    <p class="card-text">डाउनलोड करण्याकरिता खालील बटनावर क्लिक करा</p>
+                    <a href="#" class="btn btn-success">सोडवा </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4 bk">
+        <div class="quiz-box custom-box">
+
+        </div>
+    </div>
+</div>

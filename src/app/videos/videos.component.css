@@ -1,0 +1,21 @@
+.bk {
+    padding-left: 10px;
+    padding-right: 10px;
+     font-size: 16px;
+     background-color: #dc3545 !important;
+   }
+
+   .custom-box {
+    max-width: 100%;
+    background-color: #ffffff;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 10px;
+    animation: fadeInRight 1s ease;
+  }
+  .ss {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: none;
+  }

@@ -1,0 +1,43 @@
+<div class="row ss">
+    <div class="col-md-8 bk">
+        <div class="quiz-box custom-box">
+
+            <h2 class="text-center bg-primarys text-white mt-2"
+                style="background: linear-gradient(to right, rgba(255,93,177,1) 0%, rgba(239,1,124,1) 100%);"> शालेय
+                पाठपुस्तके </h2>
+            <hr>
+            <form method="post">
+                <div class="form-row align-items-center">
+                    <div class="col-sm-12 my-1">
+                        <label class="text-danger">वर्ग निवडा </label>
+                        <select name="selectClass" class="custom-select" (change)="onChangeClass($event)">
+                            <option value="100">खालील पैकी एक</option>
+                            <option value=" {{item.allclasses_id}}" *ngFor="let item of datas">
+                                {{item.allclasses_className}} </option>
+
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-3">
+
+                <div class="col-md-4  mb-2" *ngFor="let item of allSubject">
+                    <div class="card" style="width: 100%;">
+                        <img src="{{item.allSubject_image}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.allSubject_subjectName}}</h5>
+
+                            <button class="btn btn-outline-danger " (click)="goToLink(item.allSubject_pdfLink)">डाउनलोड
+                                करा</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 bk">
+        <div class="quiz-box custom-box">
+
+        </div>
+    </div>
+</div>

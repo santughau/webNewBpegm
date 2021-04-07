@@ -1,0 +1,64 @@
+<div class="row ss">
+    <div class="col-md-8 bk">
+        <div class="quiz-box custom-box">
+            <h2 class="text-center bg-primarys text-white mt-2"
+                style="background: linear-gradient(to right, rgba(255,93,177,1) 0%, rgba(239,1,124,1) 100%);">सत्र
+                परीक्षा
+            </h2>
+            <hr>
+            <form method="post">
+                <div class="form-row align-items-center">
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">वर्ग निवडा </label>
+                        <select name="selectClass" class="custom-select" (change)="onChangeClass($event)">
+                            <option value="100">खालील पैकी एक</option>
+                            <option value=" {{item.allclasses_id}}" *ngFor="let item of datas">
+                                {{item.allclasses_className}} </option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">विषय निवडा </label>
+                        <select name="sub" class="custom-select" (change)="onChangeSub($event)">
+                            <option value="100">खालील पैकी एक</option>
+                            <option value="{{item.allSubject_id}}" *ngFor="let item of allSubject">
+                                {{item.allSubject_subjectName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 my-1">
+                        <label class="text-danger">सत्र निवडा </label>
+                        <select name="sub" id="state" class="custom-select" (change)="onChangeTerm($event)">
+                            <option value="100">खालील पैकी एक</option>
+                            <option value="{{item.id}}" *ngFor="let item of termData">{{item.termName}}</option>
+                        </select>
+                    </div>
+
+                </div>
+            </form>
+            <hr>
+            <div *ngIf="showData && !firstView ">
+                <div class="card" *ngFor="let item of termList; let i = index ">
+                    <div class="card-header bg-primary text-white">
+                        परीक्षा क्रमांक {{i+1}}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.questionpaper_title}}</h5>
+                        <p class="card-text">डाउनलोड करण्याकरिता खालील बटनावर क्लिक करा</p>
+                        <button class="btn btn-success" (click)="goToUrl(item.questionPaper_link)">क्लिक करा</button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!showData" class="text-danger text-center">
+                <h1>माहिती उपलब्ध नाही</h1>
+            </div>
+            <div *ngIf="firstView" class="text-danger text-center">
+                <h1>कृपया वर्ग , विषय व पाठाचे नाव निवडा</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 bk">
+        <div class="quiz-box custom-box">
+
+        </div>
+    </div>
+</div>
