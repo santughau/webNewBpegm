@@ -3,10 +3,10 @@
         <div class="quiz-box custom-box" *ngIf="show">
             <div class="question-number">प्रश्न क्रमांक : {{question_count+1}} / {{questions.length}} <span
                     style="float: right;">{{formatted_min}}:{{formatted_sec}}</span></div>
-            <div class="question-text">{{questions[question_count].question}}</div>
+            <div class="question-text">{{questions[question_count]?.question}}</div>
             <div class="option-container">
 
-                <div id="0" class="option " *ngFor="let item of questions[question_count].options; let i = index"
+                <div id="0" class="option " *ngFor="let item of questions[question_count]?.options; let i = index"
                     [style.animation-delay.s]="i" (click)="toggleClass(i)">{{item}}</div>
             </div>
             <div class="next-question-btn">
@@ -18,59 +18,83 @@
         </div>
         <div class="result-box custom-box" *ngIf="!show">
             <h1>निकाल</h1>
-            <table>
-                <tr>
-                    <td class="bg-dark text-white">एकूण प्रश्न</td>
-                    <td class="total-questions">{{questions.length}}</td>
-                </tr>
+            <form #resultForm="ngForm">
+                <table>
+                    <tr>
+                        <td class="bg-dark text-white">एकूण प्रश्न</td>
+                        <td class="total-questions">{{questions.length}}</td>
+                    </tr>
 
-                <tr>
-                    <td class="bg-dark text-white">बरोबर आलेली उत्तरे</td>
-                    <td class="total-correct">{{correctAnswer}}</td>
-                </tr>
-                <tr>
-                    <td class="bg-dark text-white">चूक असलेली उत्तरे</td>
-                    <td class="total-wrong">{{questions.length - correctAnswer}}</td>
-                </tr>
-                <tr>
-                    <td class="bg-dark text-white">शेकडा निकाल</td>
-                    <td class="percentage">{{100 * correctAnswer /questions.length | number : '1.2-2'}}%</td>
-                </tr>
-                <tr>
-                    <td class="bg-dark text-white">तुमचे पूर्ण नाव लिहा</td>
-                    <td class="total-score"><input type="text" class="form-control" required placeholder="पूर्ण नाव">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="bg-dark text-white">तुमचा मोबाईल क्रमांक लिहा</td>
-                    <td class="total-score"> <input type="text" class="form-control" required
-                            placeholder="मोबाईल क्रमांक"></td>
-                </tr>
-                <tr>
-                    <td class="bg-dark text-white">जिल्हा निवडा</td>
-                    <td class="total-score">
-                        <select class="form-control form-select" required>
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="bg-dark text-white">तालुका निवडा</td>
-                    <td class="total-score">
-                        <select class="form-control form-select" required>
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-            <button type="button" [disabled]="true" class="btn">सबमिट करा</button>
-
+                    <tr>
+                        <td class="bg-dark text-white">बरोबर आलेली उत्तरे</td>
+                        <td class="total-correct">{{correctAnswer}}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark text-white">चूक असलेली उत्तरे</td>
+                        <td class="total-wrong">{{questions.length - correctAnswer}}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark text-white">शेकडा निकाल</td>
+                        <td class="percentage">{{100 * correctAnswer /questions.length | number : '1.2-2'}}%</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark text-white">लागलेला वेळ </td>
+                        <td class="percentage">{{formatted_min}} : {{formatted_sec}}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark text-white">तुमचे पूर्ण नाव लिहा</td>
+                        <td class="total-score"><input name="fullName" #fullName="ngModel" [(ngModel)]="result.fullName"
+                                type="text" class="form-control" required placeholder="पूर्ण नाव">
+                            <div *ngIf="fullName.invalid && fullName.touched ">
+                                <h4 class="text-danger text-center" style="padding-left: 20px">कृपया तुमचे पूर्ण नाव
+                                    लिहा</h4>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark text-white">तुमचा मोबाईल क्रमांक लिहा</td>
+                        <td class="total-score"> <input name="mobile" #mobile="ngModel" [(ngModel)]="result.mobile"
+                                type="text" class="form-control" required placeholder="मोबाईल क्रमांक">
+                            <div *ngIf="mobile.invalid && mobile.touched ">
+                                <h4 class="text-danger text-center" style="padding-left: 20px">कृपया तुमचा मोबाईल
+                                    क्रमांक लिहा</h4>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark text-white">जिल्हा निवडा</td>
+                        <td class="total-score">
+                            <select name="dist" #dist="ngModel" [(ngModel)]="result.dist"
+                                class="form-control form-select" (change)="onChangeDistrict($event)" required>
+                                <option value="">Please Select</option>
+                                <option value="{{item.district_id}}" *ngFor="let item of district">
+                                    {{item.district_name}}
+                                </option>
+                            </select>
+                            <div *ngIf="dist.invalid && dist.touched ">
+                                <h4 class="text-danger text-center" style="padding-left: 20px">कृपया तुमचा जिल्हा निवडा
+                                </h4>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bg-dark text-white">तालुका निवडा</td>
+                        <td class="total-score">
+                            <select name="tal" #tal="ngModel" [(ngModel)]="result.tal" class="form-control form-select"
+                                required>
+                                <option value="">Please Select</option>
+                                <option value="{{item.taluka_id}}" *ngFor="let item of taluka">{{item.taluka_name}}
+                                </option>
+                            </select>
+                            <div *ngIf="tal.invalid && tal.touched ">
+                                <h4 class="text-danger text-center" style="padding-left: 20px">कृपया तुमचा तालुका निवडा
+                                </h4>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <button type="button" [disabled]="resultForm.invalid" class="btn">सबमिट करा</button>
+            </form>
         </div>
     </div>
     <div class="col-md-5 bk">

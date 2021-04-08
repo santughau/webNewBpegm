@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MyservicesService } from '../shared/myservices.service';
 
 @Component({
@@ -18,11 +19,11 @@ export class QuizComponent implements OnInit {
   showLoadingIndicator: boolean = false;
   allSubject: any[] = [];
   allChapters: any[] = [];
-  videoList: any[] = [];
+  examList: any[] = [];
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
-  constructor(private service: MyservicesService) { }
+  constructor(private service: MyservicesService, private _router: Router) { }
 
   ngOnInit(): void {
     this.showLoadingIndicator = true
@@ -68,22 +69,22 @@ export class QuizComponent implements OnInit {
     this.chapterId = ev.target.value;
     if (ev.target.value == 100) {
       this.showLoadingIndicator = false;
-      this.videoList = [];
+      this.examList = [];
     } else {
       this.showLoadingIndicator = true
-      this.service.getVideoList(this.chapterId).subscribe((data) => {
+      this.service.getExamList(this.chapterId).subscribe((data) => {
         ;
 
-        this.videoList = data.document.records;
+        this.examList = data.document.records;
         this.showData = true;
-        console.log(this.videoList);
+        console.log(this.examList);
 
         this.showLoadingIndicator = false;
       }, (error) => {
         console.error('error caught in component')
         this.errorMessage = error;
-        this.videoList = [];
-        console.log(this.videoList);
+        this.examList = [];
+        console.log(this.examList);
         this.showData = false;
         this.showLoadingIndicator = false;
 
@@ -91,10 +92,9 @@ export class QuizComponent implements OnInit {
     }
   }
 
-  goToUrl(url: string) {
-    console.log(url);
-    const link = "https://www.youtube.com/watch?v=" + url;
-    window.open(link, '_blank');
+  goToUrl(id: string) {
+    console.log(id);
+    this._router.navigate(['/question', id]);
   }
 
 

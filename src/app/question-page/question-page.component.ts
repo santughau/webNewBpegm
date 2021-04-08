@@ -1,53 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MyservicesService } from '../shared/myservices.service';
-
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-question-page',
   templateUrl: './question-page.component.html',
   styleUrls: ['./question-page.component.css']
 })
 export class QuestionPageComponent implements OnInit {
-  show: boolean = true;
+  show: boolean = false;
   btnDissabled: boolean = true;
-  questions = [
-    {
-      id: 1,
-      question: "What is the full form of RAM ?",
-      answer: "A",
-      options: [
-        "Random Access Memory",
-        "Randomely Access Memory",
-        "Run Aceapt Memory",
-        "None of these 1"
-      ]
-    },
-    {
-      id: 2,
-      question: "What is the full form of CPU?",
-      answer: "B",
-      options: [
-        "Central Program Unit Although it is possible to add the style attribute with a value to an element with this method, it is recommended that you use properties of the Style object instead for inline styling, because this will not overwrite other CSS properties that may be specified in the style attribute:",
-        "Central Processing Unit Although it is possible to add the style attribute with a value to an element with this method, it is recommended that you use properties of the Style object instead for inline styling, because this will not overwrite other CSS properties that may be specified in the style attribute:",
-        "Central Preload Unit Although it is possible to add the style attribute with a value to an element with this method, it is recommended that you use properties of the Style object instead for inline styling, because this will not overwrite other CSS properties that may be specified in the style attribute:",
-        "None of these 2 Although it is possible to add the style attribute with a value to an element with this method, it is recommended that you use properties of the Style object instead for inline styling, because this will not overwrite other CSS properties that may be specified in the style attribute:"
-      ]
-    },
-    {
-      id: 3,
-      question: "What is the full form of E-mail",
-      answer: "C",
-      options: [
-        "Electronic Mail",
-        "Electric Mail",
-        "Engine Mail",
-        "None of these 3"
-      ]
-    }
-  ];
+  questions: any = [];
+  district: any[] = [];
+  taluka: any[] = [];
   userAnswer: string = "";
   question_count = 0;
-  points = 0;
   buttonTitle: string = 'Next';
   correctAnswer: number = 0;
   dt = new Date(new Date().setTime(0));
@@ -57,16 +24,40 @@ export class QuestionPageComponent implements OnInit {
   time = 0;
   formatted_sec: any = "00";
   formatted_min: any = "00";
-  constructor(private router: Router, public service: MyservicesService) { }
+  stopTimer: any;
+  distId: number = 0;
+  result = {
+    fullName: '',
+    mobile: '',
+    dist: '',
+    tal: '',
+  };
+  constructor(private router: Router, public service: MyservicesService, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userAnswer = "";
+    this.question_count = 0;
+    this.correctAnswer = 0;
+    this.formatted_min = "00";
+    this.formatted_sec = "00";
+    this.time = 0;
+    this.questions = [];
+    this.district = [];
+    this.taluka = [];
+    this.distId = 0;
+    const id = +this._route.snapshot.params['id'];
+    this.service.getQuestionList(id).subscribe((res) => {
+      this.questions = res.document.records;
+    })
     this.timer();
+    this.service.getDistrictList().subscribe((data) => {
+      this.district = data.document.records;
 
+    })
   }
 
   toggleClass(item?: any) {
     this.btnDissabled = false;
-    console.log(item);
     if (item == 0) {
       this.userAnswer = "A"
     } else if (item == 1) {
@@ -74,12 +65,16 @@ export class QuestionPageComponent implements OnInit {
     } else if (item == 2) {
       this.userAnswer = "C"
     } else if (item == 3) {
-      this.userAnswer == "D"
+      this.userAnswer = "D"
+    } else {
+
     }
+
+
     if (this.userAnswer == this.questions[this.question_count].answer) {
       this.correctAnswer++;
-      this.service.mark.next(this.correctAnswer);
       let options = document.querySelectorAll("div.option");
+
       let indicator = document.querySelectorAll(".answers-indicator div");
       for (let i = 0; i < options.length; i++) {
         options[i].classList.remove("correct");
@@ -120,15 +115,12 @@ export class QuestionPageComponent implements OnInit {
         setTimeout(() => {
           options[3].classList.add("correct");
         }, 2000)
-
-
       }
     }
-
   }
 
   timer() {
-    setInterval(() => {
+    this.stopTimer = setInterval(() => {
       this.time++;
       if (this.seconds < 59) {
         this.seconds++;
@@ -143,19 +135,26 @@ export class QuestionPageComponent implements OnInit {
 
   next() {
     this.btnDissabled = true;
-    console.log("Ranjana" + this.correctAnswer);
-
     if (this.question_count == this.questions.length - 1) {
-
       this.show = false;
-
-
     }
     if (this.question_count == this.questions.length - 2) {
       this.buttonTitle = "Finish";
+      clearInterval(this.stopTimer);
+    }
+    this.question_count++;
+  }
+
+  onChangeDistrict(id: any) {
+    this.distId = id.target.value;
+    if (this.distId != null) {
+      this.taluka = [];
+      this.service.getTalukaList(this.distId).subscribe((data) => {
+        this.taluka = data.document.records;
+      })
     }
 
-    this.question_count++;
+
   }
 
 }

@@ -34,7 +34,25 @@ export class MyservicesService {
   getVideoList(id: any): Observable<any> {
     return this.http.get(this.url + 'youtube/read_by_youtube_chapter_id.php?youtube_chapter_id=' + id);
   }
+
   getTermList(subId: any, termId: any): Observable<any> {
     return this.http.get(this.url + 'questionpaper/read_by_questionpaper_sub_id.php?questionPaper_sub_id=' + subId + '&questionPaper_term_id=' + termId);
   }
+
+  getExamList(Id: any): Observable<any> {
+    return this.http.get(this.url + 'exam/read_by_exam_chapter_id.php?exam_chapter_id=' + Id);
+  }
+
+  getQuestionList(Id: any): Observable<any> {
+    return this.http.get(this.url + 'questions/read_by_questions_exam_id.php?questions_exam_id=' + Id);
+  }
+
+  getDistrictList(): Observable<any> {
+    return this.http.get(this.url + 'district/read.php');
+  }
+
+  getTalukaList(Id: any): Observable<any> {
+    return this.http.get(this.url + 'taluka/read_by_taluka_dist_id.php?taluka_dist_id=' + Id);
+  }
+
 }

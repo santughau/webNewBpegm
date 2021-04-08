@@ -16,6 +16,7 @@ import { QuestionPageComponent } from './question-page/question-page.component';
 import { AwardComponent } from './award/award.component';
 import { DataTablesModule } from "angular-datatables";
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
     AwardComponent
   ],
   imports: [
-    BrowserModule, DataTablesModule,
+    BrowserModule, DataTablesModule, FormsModule ,
     AppRoutingModule, HttpClientModule,
   ],
   providers: [],

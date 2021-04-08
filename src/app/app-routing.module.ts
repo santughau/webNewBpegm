@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'text-book', component: TextBookComponent },
   { path: 'gr', component: GrComponent },
   { path: 'quiz', component: QuizComponent },
-  { path: 'question', component: QuestionPageComponent },
+  { path: 'question/:id', component: QuestionPageComponent },
   { path: 'award', component: AwardComponent },
 ];
 
